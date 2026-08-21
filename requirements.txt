@@ -1,0 +1,7 @@
+streamlit
+ultralytics
+pandas
+numpy
+pillow
+folium
+streamlit-folium
