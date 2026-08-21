@@ -44,11 +44,14 @@ uploaded_files = st.file_uploader(
 
 if "report_data" not in st.session_state:
     st.session_state.report_data = []
+if "annotated_images" not in st.session_state:
+    st.session_state.annotated_images = []
 
 if uploaded_files and st.button("Run Detection", type="primary"):
     st.session_state.report_data = []
-    cols = st.columns(2)
-    for idx, uf in enumerate(uploaded_files):
+    st.session_state.annotated_images = []
+
+    for uf in uploaded_files:
         img = Image.open(uf).convert("RGB")
         img_array = np.array(img)
         h, w = img_array.shape[:2]
@@ -56,8 +59,8 @@ if uploaded_files and st.button("Run Detection", type="primary"):
         r = results[0]
         annotated = r.plot()
 
-        with cols[idx % 2]:
-            st.image(annotated, caption=uf.name, use_container_width=True)
+        # Image ko session state mein save karo (name ke saath)
+        st.session_state.annotated_images.append((uf.name, annotated))
 
         lat, lon = simulate_gps()
         for box in r.boxes:
@@ -77,6 +80,14 @@ if uploaded_files and st.button("Run Detection", type="primary"):
                 "latitude": round(lat, 5),
                 "longitude": round(lon, 5),
             })
+
+# Images hamesha dikhao agar session mein hain (button dobara dabane ki zaroorat nahi)
+if st.session_state.annotated_images:
+    st.subheader("🖼️ Detected Images")
+    cols = st.columns(2)
+    for idx, (name, annotated_img) in enumerate(st.session_state.annotated_images):
+        with cols[idx % 2]:
+            st.image(annotated_img, caption=name, use_container_width=True)
 
 if st.session_state.report_data:
     st.divider()
