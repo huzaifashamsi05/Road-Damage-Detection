@@ -39,7 +39,9 @@ st.caption("YOLOv8 Object Detection | Pothole + Drain Classification | mAP50: 0.
 st.info("📍 Note: GPS coordinates in this demo are simulated for the map view. A production deployment would use the camera device's real GPS.")
 
 uploaded_files = st.file_uploader(
-    "Upload road images", type=["jpg", "jpeg", "png"], accept_multiple_files=True
+    "Upload road images",
+    type=["jpg", "jpeg", "png", "webp", "bmp", "tiff", "tif", "jfif", "avif", "gif"],
+    accept_multiple_files=True
 )
 
 if "report_data" not in st.session_state:
@@ -59,7 +61,6 @@ if uploaded_files and st.button("Run Detection", type="primary"):
         r = results[0]
         annotated = r.plot()
 
-        # Image ko session state mein save karo (name ke saath)
         st.session_state.annotated_images.append((uf.name, annotated))
 
         lat, lon = simulate_gps()
@@ -81,7 +82,6 @@ if uploaded_files and st.button("Run Detection", type="primary"):
                 "longitude": round(lon, 5),
             })
 
-# Images hamesha dikhao agar session mein hain (button dobara dabane ki zaroorat nahi)
 if st.session_state.annotated_images:
     st.subheader("🖼️ Detected Images")
     cols = st.columns(2)

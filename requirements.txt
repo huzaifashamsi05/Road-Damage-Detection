@@ -3,5 +3,6 @@ ultralytics
 pandas
 numpy
 pillow
+pillow-avif-plugin
 folium
 streamlit-folium
