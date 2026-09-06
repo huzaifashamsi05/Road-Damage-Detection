@@ -11,8 +11,11 @@ st.set_page_config(page_title="Road Damage Detection System", layout="wide", pag
 
 @st.cache_resource
 def load_model():
-    return YOLO("road_damage_model.pt")
-
+    try:
+        return YOLO("road_damage_model.pt")
+    except Exception as e:
+        st.error(f"Could not load the detection model: {e}")
+        st.stop()
 model = load_model()
 
 BASE_LAT, BASE_LON = 24.8607, 67.0011
@@ -54,15 +57,17 @@ if uploaded_files and st.button("Run Detection", type="primary"):
     st.session_state.annotated_images = []
 
     for uf in uploaded_files:
-        img = Image.open(uf).convert("RGB")
-        img_array = np.array(img)
-        h, w = img_array.shape[:2]
-        results = model.predict(img_array, conf=0.25, verbose=False)
-        r = results[0]
-        annotated = r.plot()
-
+        try:
+            img = Image.open(uf).convert("RGB")
+            img_array = np.array(img)
+            h, w = img_array.shape[:2]
+            results = model.predict(img_array, conf=0.25, verbose=False)
+            r = results[0]
+            annotated = r.plot()
+        except Exception as e:
+            st.warning(f"Skipped {uf.name}: could not process this image ({e})")
+            continue
         st.session_state.annotated_images.append((uf.name, annotated))
-
         lat, lon = simulate_gps()
         for box in r.boxes:
             cls_name = model.names[int(box.cls)]
