@@ -8,6 +8,19 @@ import folium
 from streamlit_folium import st_folium
 
 st.set_page_config(page_title="Road Damage Detection System", layout="wide", page_icon="🛣️")
+st.markdown("""
+<style>
+.stApp { background: linear-gradient(180deg, #0a0e17 0%, #0d1424 100%); }
+h1 { font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(90deg, #38bdf8, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+p, .stMarkdown { color: #b8c4d9; }
+[data-testid="stFileUploaderDropzone"] { border: 1.5px dashed rgba(56,189,248,0.35); border-radius: 14px; background: rgba(56,189,248,0.05); }
+.stButton>button { background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #05070d; font-weight: 700; border: none; border-radius: 8px; padding: 0.6rem 1.6rem; }
+[data-testid="stMetric"] { background: #121a2c; border: 1px solid rgba(56,189,248,0.18); border-radius: 12px; padding: 1rem; }
+[data-testid="stAlert"] { border-radius: 10px; }
+section[data-testid="stSidebar"] { background: #0a0e17; border-right: 1px solid rgba(148,163,184,0.08); }
+[data-testid="stDataFrame"] { border-radius: 10px; overflow: hidden; }
+</style>
+""", unsafe_allow_html=True)
 
 @st.cache_resource
 def load_model():
