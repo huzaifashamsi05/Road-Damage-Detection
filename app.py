@@ -25,8 +25,8 @@ st.markdown("""
     --border: rgba(148, 163, 184, 0.14);
 }
 
-html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-h1, h2, h3, .hero-title { font-family: 'Sora', sans-serif; }
+html, body, [class*="css"] { font-family: 'Inter', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
+h1, h2, h3, .hero-title { font-family: 'Sora', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
 
 .stApp {
     background:
@@ -131,7 +131,7 @@ h1, h2, h3, .hero-title { font-family: 'Sora', sans-serif; }
     padding: 1.1rem 1.2rem;
 }
 [data-testid="stMetricLabel"] { color: var(--text-lo) !important; }
-[data-testid="stMetricValue"] { color: var(--text-hi) !important; font-family: 'Sora', sans-serif; }
+[data-testid="stMetricValue"] { color: var(--text-hi) !important; font-family: 'Sora', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
 
 [data-testid="stAlert"] { border-radius: 12px; }
 section[data-testid="stSidebar"] { background: var(--bg-0); border-right: 1px solid var(--border); }
