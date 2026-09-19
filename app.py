@@ -25,7 +25,7 @@ st.markdown("""
     --border: rgba(148, 163, 184, 0.14);
 }
 
-html, body, [class*="css"] { font-family: 'Inter', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
+html, body, [class*="st-emotion-cache"] { font-family: 'Inter', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
 h1, h2, h3, .hero-title { font-family: 'Sora', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
 
 .stApp {
@@ -97,7 +97,7 @@ h1, h2, h3, .hero-title { font-family: 'Sora', 'Segoe UI Emoji', 'Noto Color Emo
     font-size: 1.25rem;
     margin-bottom: 0.85rem;
 }
-.feature-card h4 { margin: 0 0 0.35rem 0; color: var(--text-hi); font-size: 1.02rem; font-weight: 700; }
+.feature-card-title { margin: 0 0 0.35rem 0; color: var(--text-hi); font-size: 1.02rem; font-weight: 700; font-family: 'Sora', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
 .feature-card p { margin: 0; color: var(--text-lo); font-size: 0.88rem; line-height: 1.5; }
 
 .section-label {
@@ -190,7 +190,7 @@ def simulate_gps():
 st.markdown("""
 <div class="hero-wrap">
     <span class="hero-eyebrow">Computer Vision · YOLOv8</span>
-    <h1 class="hero-title">🛣️ Road Damage <span>Detection System</span></h1>
+    <div class="hero-title">🛣️ Road Damage <span>Detection System</span></div>
     <p class="hero-sub">Upload road photos and get instant pothole &amp; drain detection, severity scoring,
     and a downloadable maintenance report — plotted live on an interactive map.</p>
     <div class="hero-badges">
@@ -208,7 +208,7 @@ with f1:
     st.markdown("""
     <div class="feature-card">
     <div class="feature-icon">🕳️</div>
-    <h4>Pothole Detection</h4>
+    <div class="feature-card-title">Pothole Detection</div>
     <p>A custom-trained YOLOv8 model spots potholes and drains in any road photo, with a mAP50 of 0.861.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -216,7 +216,7 @@ with f2:
     st.markdown("""
     <div class="feature-card">
     <div class="feature-icon">⚠️</div>
-    <h4>Severity Scoring</h4>
+    <div class="feature-card-title">Severity Scoring</div>
     <p>Each detection is scored Minor, Moderate, or Severe based on how much of the frame it covers.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -224,7 +224,7 @@ with f3:
     st.markdown("""
     <div class="feature-card">
     <div class="feature-icon">🗺️</div>
-    <h4>Live Map + Report</h4>
+    <div class="feature-card-title">Live Map + Report</div>
     <p>Results plot on an interactive map and export as a downloadable maintenance report.</p>
     </div>
     """, unsafe_allow_html=True)
