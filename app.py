@@ -11,7 +11,7 @@ st.set_page_config(page_title="Road Damage Detection System", layout="wide", pag
 st.markdown("""
 <style>
 .stApp { background: linear-gradient(180deg, #0a0e17 0%, #0d1424 100%); }
-h1 { font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(90deg, #38bdf8, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h1 { font-weight: 800; letter-spacing: -0.02em; color: #eaf2ff; }
 p, .stMarkdown { color: #b8c4d9; }
 [data-testid="stFileUploaderDropzone"] { border: 1.5px dashed rgba(56,189,248,0.35); border-radius: 14px; background: rgba(56,189,248,0.05); }
 .stButton>button { background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #05070d; font-weight: 700; border: none; border-radius: 8px; padding: 0.6rem 1.6rem; }
@@ -19,6 +19,9 @@ p, .stMarkdown { color: #b8c4d9; }
 [data-testid="stAlert"] { border-radius: 10px; }
 section[data-testid="stSidebar"] { background: #0a0e17; border-right: 1px solid rgba(148,163,184,0.08); }
 [data-testid="stDataFrame"] { border-radius: 10px; overflow: hidden; }
+.feature-card { background: #121a2c; border: 1px solid rgba(56,189,248,0.15); border-radius: 14px; padding: 1.2rem 1.3rem; height: 100%; }
+.feature-card h4 { margin: 0 0 0.4rem 0; color: #eaf2ff; font-size: 1.05rem; }
+.feature-card p { margin: 0; color: #8fa3c0; font-size: 0.9rem; line-height: 1.45; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -29,9 +32,11 @@ def load_model():
     except Exception as e:
         st.error(f"Could not load the detection model: {e}")
         st.stop()
+
 model = load_model()
 
 BASE_LAT, BASE_LON = 24.8607, 67.0011
+
 
 def estimate_severity(box, img_width, img_height):
     x1, y1, x2, y2 = box.xyxy[0].tolist()
@@ -45,14 +50,41 @@ def estimate_severity(box, img_width, img_height):
     else:
         return "Minor", area_pct
 
+
 def simulate_gps():
     lat = BASE_LAT + random.uniform(-0.03, 0.03)
     lon = BASE_LON + random.uniform(-0.03, 0.03)
     return lat, lon
 
+
 st.title("🛣️ Road Damage Detection System")
 st.caption("YOLOv8 Object Detection | Pothole + Drain Classification | mAP50: 0.861")
 st.info("📍 Note: GPS coordinates in this demo are simulated for the map view. A production deployment would use the camera device's real GPS.")
+
+f1, f2, f3 = st.columns(3)
+with f1:
+    st.markdown("""
+    <div class="feature-card">
+    <h4>🕳️ Pothole Detection</h4>
+    <p>A custom-trained YOLOv8 model spots potholes and drains in any road photo, with a mAP50 of 0.861.</p>
+    </div>
+    """, unsafe_allow_html=True)
+with f2:
+    st.markdown("""
+    <div class="feature-card">
+    <h4>⚠️ Severity Scoring</h4>
+    <p>Each detection is scored Minor, Moderate, or Severe based on how much of the frame it covers.</p>
+    </div>
+    """, unsafe_allow_html=True)
+with f3:
+    st.markdown("""
+    <div class="feature-card">
+    <h4>🗺️ Live Map + Report</h4>
+    <p>Results plot on an interactive map and export as a downloadable maintenance report.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.write("")
 
 uploaded_files = st.file_uploader(
     "Upload road images",
@@ -80,7 +112,9 @@ if uploaded_files and st.button("Run Detection", type="primary"):
         except Exception as e:
             st.warning(f"Skipped {uf.name}: could not process this image ({e})")
             continue
+
         st.session_state.annotated_images.append((uf.name, annotated))
+
         lat, lon = simulate_gps()
         for box in r.boxes:
             cls_name = model.names[int(box.cls)]
