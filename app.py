@@ -25,8 +25,18 @@ st.markdown("""
     --border: rgba(148, 163, 184, 0.14);
 }
 
-html, body, [class*="st-emotion-cache"] { font-family: 'Inter', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
+html, body { font-family: 'Inter', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
 h1, h2, h3, .hero-title { font-family: 'Sora', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif; }
+
+/* Never let the custom font stack override Streamlit's own ligature icon fonts
+   (this is what was making icons like "upload" / "arrow_right" render as literal text) */
+[data-testid="stIconMaterial"],
+[class*="material-symbols"],
+span[data-icon],
+[data-testid="stFileUploaderDropzoneIcon"] svg,
+[data-testid*="Icon"] {
+    font-family: 'Material Symbols Rounded', 'Material Icons' !important;
+}
 
 .stApp {
     background:
